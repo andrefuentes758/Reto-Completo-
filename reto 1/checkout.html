@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pago - Retro Court</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<br><br><br><br><br><br>
+<header>
+  <h1>Finalizar Compra</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Principal</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="acerca de nosotros.html">Acerca de nosotros</a></li>
+        <li><a href="contactos.html">Contacto</a></li>
+      </ul>
+    </nav>
+</header>
+
+<main>
+  <h2>Datos de Pago</h2>
+
+  <form onsubmit="procesarPago(event)">
+    <label>Nombre:</label><br>
+    <input type="text" required><br><br>
+
+    <label>Tarjeta:</label><br>
+    <input type="text" placeholder="1234 5678 9012 3456" required><br><br>
+
+    <label>CVV:</label><br>
+    <input type="text" required><br><br>
+
+    <button type="submit">Pagar</button>
+  </form>
+
+  <h3 id="mensaje"></h3>
+</main>
+
+<script>
+function procesarPago(e) {
+  e.preventDefault();
+
+  setTimeout(() => {
+    document.getElementById("mensaje").innerHTML = "¡Compra realizada con éxito! Recibirás un email de confirmación";
+    localStorage.removeItem('supertienda_cart');
+  }, 1500);
+}
+</script>
+
+
+ <footer>
+    <p>© 2026 Retro Court - Todos los derechos reservados</p>
+    <div class="social">
+      <a href="#">Facebook</a> | 
+     <a href="https://www.instagram.com/_ledro05_/">Instagram</a> | 
+      <a href="#">WhatsApp</a>
+    </div>
+    <div class="factura">
+      <a href="#">Consultar factura electrónica</a>
+    </div>
+  </footer>
+</body>
+</html>

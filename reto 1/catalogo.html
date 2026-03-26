@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Retro Court - Catálogo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<br><br><br><br><br>
+<body>
+ 
+  <header>
+    <div class="logo">Retro Court</div>
+    
+    <nav>
+      <ul>
+        <li><a href="index.html">Principal</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="acerca de nosotros.html">Acerca de nosotros</a></li>
+        <li><a href="contactos.html">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Buscar productos...">
+      <button onclick="buscarProductos()">🔍</button>
+    </div>
+    <div class="carrito-icono" onclick="mostrarCarrito()">
+      🛒 <span id="cartCount">0</span>
+    </div>
+  </header>
+
+
+  <main>
+    <h1>Catálogo de Productos</h1>
+    <div id="productsGrid" class="grid-productos"></div>
+  </main>
+
+
+  <section id="cartSection" class="carrito">
+    <h2>Carrito de Compras</h2>
+    <div id="cartItems"></div>
+    <div class="resumen">
+      <p>Subtotal: <span id="subtotal">$0</span></p>
+      <p>Total (con envío): <span id="total">$0</span></p>
+     <button onclick="checkout()">Finalizar compra</button>
+    </div>
+  </section>
+
+
+  <footer>
+    <p>© 2026 Retro Court - Todos los derechos reservados</p>
+    <div class="social">
+      <a href="#">Facebook</a> | 
+     <a href="https://www.instagram.com/_ledro05_/">Instagram</a> | 
+      <a href="#">WhatsApp</a>
+    </div>
+    <div class="factura">
+      <a href="#">Consultar factura electrónica</a>
+    </div>
+  </footer>
+
+  <script src="productos.js"></script>
+  <script src="carrito.js"></script>
+  <script>
+   
+    renderProducts(getAllProducts());
+    function buscarProductos() {
+      const term = document.getElementById('searchInput').value;
+      const filtrados = filterProducts('', '', term);
+      renderProducts(filtrados);
+    }
+  </script>
+</body>
+</html>

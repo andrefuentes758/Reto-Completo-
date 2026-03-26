@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Online</title>
+  <link rel="stylesheet" href="style.css">
+
+
+</head>
+<body>
+  <header>
+    <div class="logo">
+        <h1>Retro Court</h1>
+    </div>
+    
+    <button class="menu-toggle" aria-label="Menú">☰</button>
+    
+    <nav>
+        <ul>
+            <li><a href="#">Principal</a></li>
+            <li><a href="#">Catálogo</a></li>
+            <li><a href="#">Acerca de nosotros</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </nav>
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("nav-menu");
+        menu.classList.toggle("active");
+      }
+      </script>
+      
+    <div class="buscador">
+        <input type="text" placeholder="Buscar productos...">
+    </div>
+</header>
+
+
+ 
+
+ <br>
+ <br>
+ <br>
+  <section class="descripcion">
+    <h1>Bienvenido a la SuperTienda</h1>
+    <p>Descubre los zapatos más vendidos</p>
+  </section>
+
+  
+ 
+  <section class="mas-vendidos">
+    <h2>Productos más vendidos</h2>
+    <div class="grid-productos">
+      <div class="producto">
+        <img src="retro 1 cafes.jpg" alt="Producto 1">
+        <h3>Jordan Retro 1 Cafés</h3>
+        <p>$200.000</p>
+        <a href="catalogo.html">Ver productos</a>
+      </div>
+      <div class="producto">
+        <img src="jordan 1 sky.jpg" alt="Producto 2">
+        <h3>Jordan Retro 1 Sky</h3>
+        <p>$320.000</p>
+        <a href="catalogo.html">Ver productos</a>
+      </div>
+      <div class="producto">
+        <img src="adidas.jpg" alt="Producto 3">
+        <h3>Adidas Azules</h3>
+        <p>$250.000</p>
+        <a href="catalogo.html">Ver productos</a>
+      </div>
+      <div class="producto">
+        <img src="pandas.webp" alt="Producto 4">
+        <h3>Jordan Retro 1 Pandas</h3>
+        <p>$250.000</p>
+        <a href="catalogo.html">Ver productos</a>
+      </div>
+    </div>
+
+    <div class="boton-catalogo">
+      <a href="catalogo.html">Ver catálogo completo</a>
+    </div>
+  </section>
+
+
+  <p>Has visitado esta página <span id="contador"></span> veces.</p>
+
+
+            
+  <script>
+    // Recuperar el contador guardado en localStorage
+    let visitas = localStorage.getItem("visitas");
+
+    // Si no existe, inicializar en 0
+    if (!visitas) {
+      visitas = 0;
+    }
+
+    // Incrementar en 1
+    visitas++;
+
+    // Guardar de nuevo
+    localStorage.setItem("visitas", visitas);
+
+    // Mostrar en la página 
+    document.getElementById("contador").textContent = visitas;
+  </script>
+
+  
+  <footer>
+    <p>© 2026 Retro Court - Todos los derechos reservados</p>
+    <div class="social">
+      <a href="#">Facebook</a> | 
+         <a href="https://www.instagram.com/_ledro05_/">Instagram</a> | 
+      <a href="#">WhatsApp</a>
+    </div>
+    <div class="carrito">
+      <a href="#">ver carrito</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('menu').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
