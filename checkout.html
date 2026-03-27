@@ -2,13 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Pago - Retro Court</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Court - Pago</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<br><br><br><br><br><br>
-<header>
-  <h1>Finalizar Compra</h1>
+  <header>
+    <div class="logo">
+      <h1>Retro Court</h1>
+    </div>
+    <button class="menu-toggle">☰</button>
     <nav>
       <ul>
         <li><a href="index.html">Principal</a></li>
@@ -17,49 +20,78 @@
         <li><a href="contactos.html">Contacto</a></li>
       </ul>
     </nav>
-</header>
+    <div class="carrito-icono" onclick="mostrarCarrito()">
+      🛒 <span id="cartCount">0</span>
+    </div>
+  </header>
 
-<main>
-  <h2>Datos de Pago</h2>
+  <main>
+    <h2>Finalizar Compra</h2>
+    <form onsubmit="procesarPago(event)">
+      <label>Nombre:</label><br>
+      <input type="text" required><br><br>
+      <label>Tarjeta:</label><br>
+      <input type="text" placeholder="1234 5678 9012 3456" required><br><br>
+      <label>CVV:</label><br>
+      <input type="text" required><br><br>
+      <button type="submit">Pagar</button>
+    </form>
+    <h3 id="mensaje"></h3>
+  </main>
 
-  <form onsubmit="procesarPago(event)">
-    <label>Nombre:</label><br>
-    <input type="text" required><br><br>
+  <!-- Carrito flotante -->
+  <section id="cartSection" class="carrito">
+    <h2>Carrito de Compras</h2>
+    <div id="cartItems"></div>
+    <div class="resumen">
+      <p>Subtotal: <span id="subtotal">$0</span></p>
+      <p>Envío: <span id="envio">$0</span></p>
+      <p>Total: <span id="total">$0</span></p>
+      <button onclick="checkout()">Finalizar compra</button>
+      <button onclick="cart.clearCart()">Vaciar carrito</button>
+    </div>
+  </section>
 
-    <label>Tarjeta:</label><br>
-    <input type="text" placeholder="1234 5678 9012 3456" required><br><br>
-
-    <label>CVV:</label><br>
-    <input type="text" required><br><br>
-
-    <button type="submit">Pagar</button>
-  </form>
-
-  <h3 id="mensaje"></h3>
-</main>
-
-<script>
-function procesarPago(e) {
-  e.preventDefault();
-
-  setTimeout(() => {
-    document.getElementById("mensaje").innerHTML = "¡Compra realizada con éxito! Recibirás un email de confirmación";
-    localStorage.removeItem('supertienda_cart');
-  }, 1500);
-}
-</script>
-
-
- <footer>
+  <footer>
+    <div class="contador-visitas">Visitas: <span id="contador"></span></div>
     <p>© 2026 Retro Court - Todos los derechos reservados</p>
     <div class="social">
-      <a href="#">Facebook</a> | 
-     <a href="https://www.instagram.com/_ledro05_/">Instagram</a> | 
+      <a href="#">Facebook</a> |
+      <a href="https://www.instagram.com/_ledro05_/">Instagram</a> |
       <a href="#">WhatsApp</a>
     </div>
     <div class="factura">
       <a href="#">Consultar factura electrónica</a>
     </div>
   </footer>
+
+  <script src="productos.js"></script>
+  <script src="carrito.js"></script>
+  <script>
+    function procesarPago(e) {
+      e.preventDefault();
+      setTimeout(() => {
+        document.getElementById("mensaje").innerHTML = "¡Compra realizada con éxito! Recibirás un email de confirmación";
+        localStorage.removeItem('supertienda_cart');
+        cart.clearCart(); // Vaciar carrito visualmente
+      }, 1500);
+    }
+
+    // Contador de visitas
+    let visitas = localStorage.getItem("visitas");
+    if (!visitas) visitas = 0;
+    visitas++;
+    localStorage.setItem("visitas", visitas);
+    document.getElementById("contador").textContent = visitas;
+
+    // Menú hamburguesa
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('nav');
+      if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => nav.classList.toggle('active'));
+      }
+    });
+  </script>
 </body>
 </html>
