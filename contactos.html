@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Court-Contacto</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Court - Contacto</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-      <header>
-    <div class="logo">Retro Court</div>
-   
+  <header>
+    <div class="logo">
+      <h1>Retro Court</h1>
+    </div>
+    <button class="menu-toggle">☰</button>
     <nav>
       <ul>
         <li><a href="index.html">Principal</a></li>
@@ -18,52 +20,80 @@
         <li><a href="contactos.html">Contacto</a></li>
       </ul>
     </nav>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="carrito-icono" onclick="mostrarCarrito()">
+      🛒 <span id="cartCount">0</span>
     </div>
-  
   </header>
 
-<link rel="stylesheet" href="style.css">
- 
-<section class="contacto">
-  <h2>Contáctanos</h2>
+  <main>
+    <section class="contacto">
+      <h2>Contáctanos</h2>
+      <p>¿Tienes alguna duda o necesitas ayuda? ¡Estamos aquí para ti!</p>
+      <p>Puedes escribirnos directamente o llenar el siguiente formulario.</p>
+      <form>
+        <input type="text" placeholder="Tu nombre" required>
+        <input type="email" placeholder="Tu correo" required>
+        <textarea placeholder="Tu mensaje" required></textarea>
+        <button type="submit">Enviar mensaje</button>
+      </form>
+    </section>
 
-  <p>¿Tienes alguna duda o necesitas ayuda? ¡Estamos aquí para ti!</p>
-  <p>Puedes escribirnos directamente o llenar el siguiente formulario.</p>
+    <div style="display: flex; justify-content: center; width: 100%; padding: 20px;">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.382688846356!2d-74.7831!3d10.9723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef42d65a889396d%3A0x6f9919f9d7990c6b!2sCl.%2034%2C%20Barranquilla%2C%20Atl%C3%A1ntico!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco" 
+        width="600" 
+        height="450" 
+        style="border:0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" 
+        allowfullscreen="" 
+        loading="lazy">
+      </iframe>
+    </div>
+  </main>
 
-  <form>
-    <input type="text" placeholder="Tu nombre" required>
-    <input type="email" placeholder="Tu correo" required>
-    <textarea placeholder="Tu mensaje" required></textarea>
-    <button type="submit">Enviar mensaje</button>
-  </form>
-</section>
+  <!-- Carrito flotante -->
+  <section id="cartSection" class="carrito">
+    <h2>Carrito de Compras</h2>
+    <div id="cartItems"></div>
+    <div class="resumen">
+      <p>Subtotal: <span id="subtotal">$0</span></p>
+      <p>Envío: <span id="envio">$0</span></p>
+      <p>Total: <span id="total">$0</span></p>
+      <button onclick="checkout()">Finalizar compra</button>
+      <button onclick="cart.clearCart()">Vaciar carrito</button>
+    </div>
+  </section>
 
-<div style="display: flex; justify-content: center; align-items: center; width: 100%; padding: 20px;">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.382688846356!2d-74.7831!3d10.9723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef42d65a889396d%3A0x6f9919f9d7990c6b!2sCl.%2034%2C%20Barranquilla%2C%20Atl%C3%A1ntico!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco" 
-      width="600" 
-      height="450" 
-      style="border:0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" 
-      allowfullscreen="" 
-      loading="lazy" 
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-</div>
-
- <footer>
+  <footer>
+    <div class="contador-visitas">Visitas: <span id="contador"></span></div>
     <p>© 2026 Retro Court - Todos los derechos reservados</p>
     <div class="social">
-      <a href="#">Facebook</a> | 
-     <a href="https://www.instagram.com/_ledro05_/">Instagram</a> | 
+      <a href="#">Facebook</a> |
+      <a href="https://www.instagram.com/_ledro05_/">Instagram</a> |
       <a href="#">WhatsApp</a>
     </div>
     <div class="factura">
       <a href="#">Consultar factura electrónica</a>
     </div>
   </footer>
+
+  <script src="productos.js"></script>
+  <script src="carrito.js"></script>
+  <script>
+    // Contador de visitas
+    let visitas = localStorage.getItem("visitas");
+    if (!visitas) visitas = 0;
+    visitas++;
+    localStorage.setItem("visitas", visitas);
+    document.getElementById("contador").textContent = visitas;
+
+    // Menú hamburguesa
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('nav');
+      if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => nav.classList.toggle('active'));
+      }
+    });
+  </script>
 </body>
 </html>
