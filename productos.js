@@ -3,7 +3,6 @@ const products = [
   { id: 2, name: "Jordan Retro 1 Sky", price: 320000, originalPrice: 350000, category: "zapatos", image: "jordan 1 sky.jpg", description: "Tenis edición cielo especial", stock: 8 },
   { id: 3, name: "Adidas Azules", price: 250000, originalPrice: 280000, category: "zapatos", image: "adidas.jpg", description: "Tenis Adidas azules", stock: 12 },
   { id: 4, name: "Jordan Retro 1 Pandas", price: 250000, originalPrice: 300000, category: "zapatos", image: "pandas.webp", description: "Tenis blanco y negro", stock: 15 },
-
   { id: 5, name: "Nike Air Marron", price: 280000, originalPrice: 320000, category: "zapatos", image: "retro 1 marron.jpg", description: "Clásicos y pintoso", stock: 10 },
   { id: 6, name: "Air Jordan 1 Low", price: 600000, originalPrice: 650000, category: "zapatos", image: "jordan.jpg", description: "Deportivas y cómodas", stock: 9 },
   { id: 7, name: "Miles Morales Retro 1", price: 220000, originalPrice: 250000, category: "zapatos", image: "retro 1 miles morales.jpg", description: "Diseño clásico y perfecto", stock: 7 },
@@ -19,7 +18,6 @@ function getProductById(id) { return products.find(p => p.id === parseInt(id)); 
 
 function filterProducts(category = '', priceRange = '', searchTerm = '') {
   let filtered = products;
-
   if (searchTerm) {
     const term = searchTerm.toLowerCase();
     filtered = filtered.filter(p =>
@@ -27,7 +25,6 @@ function filterProducts(category = '', priceRange = '', searchTerm = '') {
       p.description.toLowerCase().includes(term)
     );
   }
-
   return filtered;
 }
 
@@ -46,5 +43,5 @@ function createProductCard(product) {
 
 function renderProducts(list) {
   const container = document.getElementById('productsGrid');
-  container.innerHTML = list.map(p => createProductCard(p)).join('');
+  if (container) container.innerHTML = list.map(p => createProductCard(p)).join('');
 }
