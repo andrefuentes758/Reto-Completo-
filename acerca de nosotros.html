@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Court</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Court - Acerca de nosotros</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-      <header>
-    <div class="logo">Retro Court</div>
-   
+  <header>
+    <div class="logo">
+      <h1>Retro Court</h1>
+    </div>
+    <button class="menu-toggle">☰</button>
     <nav>
       <ul>
         <li><a href="index.html">Principal</a></li>
@@ -16,46 +19,122 @@
         <li><a href="acerca de nosotros.html">Acerca de nosotros</a></li>
         <li><a href="contactos.html">Contacto</a></li>
       </ul>
-    </nav> 
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+    </nav>
+    <div class="carrito-icono" onclick="mostrarCarrito()">
+      🛒 <span id="cartCount">0</span>
     </div>
   </header>
-  <link rel="stylesheet" href="style.css">
-  <section class="acerca">
-  <div class="acerca-contenido">
-    <div class="acerca-texto">
-      <h2>Acerca de nosotros</h2>
-      <p>
-        En SuperTienda nos apasiona ofrecerte los mejores sneakers del mercado,
-        combinando estilo, calidad y comodidad.
-      </p>
-      <p>
-        Trabajamos con modelos icónicos y tendencias actuales para que siempre
-        encuentres el par perfecto.
-      </p>
-      <ul>
-        <li>✔ Productos 100% originales</li>
-        <li>✔ Envíos rápidos</li>
-        <li>✔ Atención personalizada</li>
-      </ul>
+
+  <main>
+    
+    <section class="acerca">
+      <div class="acerca-contenido">
+        <div class="acerca-texto">
+          <h2>Acerca de nosotros</h2>
+          <p>En retro court nos apasiona ofrecerte los mejores sneakers del mercado, combinando estilo, calidad y comodidad.</p>
+          <p>Trabajamos con modelos icónicos y tendencias actuales para que siempre encuentres el par perfecto.</p>
+          <ul>
+            <li>Productos 100% originales</li>
+            <li>Envíos rápidos</li>
+            <li>Atención personalizada</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filtros -->
+    <section class="filtros-acerca">
+      <h2>Filtrar productos</h2>
+      <form id="filtros-acerca">
+        <label>Marca:
+          <select id="marca">
+            <option value="">Todas</option>
+            <option value="Jordan">Jordan</option>
+            <option value="Nike">Nike</option>
+            <option value="Adidas">Adidas</option>
+          </select>
+        </label>
+        <label>Precio máximo:
+          <input type="number" id="precioMax" placeholder="Ej: 300000">
+        </label>
+        <button type="button" onclick="filtrarAcerca()">Filtrar</button>
+      </form>
+      <div id="productosAcerca" class="grid-productos"></div>
+    </section>
+  </main>
+
+  <!-- Carrito flotante -->
+  <section id="cartSection" class="carrito">
+    <h2>Carrito de Compras</h2>
+    <div id="cartItems"></div>
+    <div class="resumen">
+      <p>Subtotal: <span id="subtotal">$0</span></p>
+      <p>Envío: <span id="envio">$0</span></p>
+      <p>Total: <span id="total">$0</span></p>
+      <button onclick="checkout()">Finalizar compra</button>
+      <button onclick="cart.clearCart()">Vaciar carrito</button>
     </div>
-  </div>
-</section>
+  </section>
 
-
-   <footer>
+  <footer>
+    <div class="contador-visitas">Visitas: <span id="contador"></span></div>
     <p>© 2026 Retro Court - Todos los derechos reservados</p>
     <div class="social">
-      <a href="#">Facebook</a> | 
-     <a href="https://www.instagram.com/_ledro05_/">Instagram</a> | 
+      <a href="#">Facebook</a> |
+      <a href="https://www.instagram.com/_ledro05_/">Instagram</a> |
       <a href="#">WhatsApp</a>
     </div>
     <div class="factura">
       <a href="#">Consultar factura electrónica</a>
     </div>
   </footer>
+
+  <script src="productos.js"></script>
+  <script src="carrito.js"></script>
+  <script>
+    function renderProductosAcerca(lista) {
+      const cont = document.getElementById("productosAcerca");
+      cont.innerHTML = lista.map(p => `
+        <div class="producto">
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+          <p>Precio: $${p.price}</p>
+          <p>Stock: ${p.stock}</p>
+          <button onclick="addToCart(${p.id})">Agregar</button>
+        </div>
+      `).join("");
+    }
+
+    function filtrarAcerca() {
+      const marca = document.getElementById("marca").value;
+      const precioMax = document.getElementById("precioMax").value;
+      const filtrados = products.filter(p => {
+        const coincideMarca = !marca || p.name.toLowerCase().includes(marca.toLowerCase());
+        const coincidePrecio = !precioMax || p.price <= precioMax;
+        return coincideMarca && coincidePrecio;
+      });
+      renderProductosAcerca(filtrados);
+    }
+
+    // Mostrar todos al inicio
+    renderProductosAcerca(products);
+
+    // Contador de visitas
+    let visitas = localStorage.getItem("visitas");
+    if (!visitas) visitas = 0;
+    visitas++;
+    localStorage.setItem("visitas", visitas);
+    document.getElementById("contador").textContent = visitas;
+
+    // Menú hamburguesa
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('nav');
+      if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => nav.classList.toggle('active'));
+      }
+    });
+  </script>
 </body>
 </html>
