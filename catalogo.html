@@ -2,15 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Retro Court - Catálogo</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<br><br><br><br><br>
 <body>
- 
   <header>
-    <div class="logo">Retro Court</div>
-    
+    <div class="logo">
+      <h1>Retro Court</h1>
+    </div>
+    <button class="menu-toggle">☰</button>
     <nav>
       <ul>
         <li><a href="index.html">Principal</a></li>
@@ -19,43 +20,35 @@
         <li><a href="contactos.html">Contacto</a></li>
       </ul>
     </nav>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Buscar productos...">
-      <button onclick="buscarProductos()">🔍</button>
-    </div>
     <div class="carrito-icono" onclick="mostrarCarrito()">
       🛒 <span id="cartCount">0</span>
     </div>
   </header>
-
 
   <main>
     <h1>Catálogo de Productos</h1>
     <div id="productsGrid" class="grid-productos"></div>
   </main>
 
-
+  <!-- Carrito flotante -->
   <section id="cartSection" class="carrito">
     <h2>Carrito de Compras</h2>
     <div id="cartItems"></div>
     <div class="resumen">
       <p>Subtotal: <span id="subtotal">$0</span></p>
-      <p>Total (con envío): <span id="total">$0</span></p>
-     <button onclick="checkout()">Finalizar compra</button>
+      <p>Envío: <span id="envio">$0</span></p>
+      <p>Total: <span id="total">$0</span></p>
+      <button onclick="checkout()">Finalizar compra</button>
+      <button onclick="cart.clearCart()">Vaciar carrito</button>
     </div>
   </section>
 
-
   <footer>
+    <div class="contador-visitas">Visitas: <span id="contador"></span></div>
     <p>© 2026 Retro Court - Todos los derechos reservados</p>
     <div class="social">
-      <a href="#">Facebook</a> | 
-     <a href="https://www.instagram.com/_ledro05_/">Instagram</a> | 
+      <a href="#">Facebook</a> |
+      <a href="https://www.instagram.com/_ledro05_/">Instagram</a> |
       <a href="#">WhatsApp</a>
     </div>
     <div class="factura">
@@ -66,13 +59,23 @@
   <script src="productos.js"></script>
   <script src="carrito.js"></script>
   <script>
-   
     renderProducts(getAllProducts());
-    function buscarProductos() {
-      const term = document.getElementById('searchInput').value;
-      const filtrados = filterProducts('', '', term);
-      renderProducts(filtrados);
-    }
+
+    // Contador de visitas
+    let visitas = localStorage.getItem("visitas");
+    if (!visitas) visitas = 0;
+    visitas++;
+    localStorage.setItem("visitas", visitas);
+    document.getElementById("contador").textContent = visitas;
+
+    // Menú hamburguesa
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('nav');
+      if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => nav.classList.toggle('active'));
+      }
+    });
   </script>
 </body>
 </html>
