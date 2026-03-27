@@ -2,6 +2,7 @@ class ShoppingCart {
   constructor() {
     this.items = this.loadCart();
     this.updateCartCount();
+    this.renderCartItems();
   }
 
   loadCart() {
@@ -58,12 +59,12 @@ class ShoppingCart {
   }
 
   updateCartCount() {
-    document.getElementById('cartCount').textContent = this.getTotalItems();
+    const cartCountSpan = document.getElementById('cartCount');
+    if (cartCountSpan) cartCountSpan.textContent = this.getTotalItems();
   }
 
   renderCartItems() {
     const container = document.getElementById('cartItems');
-
     if (!container) return;
 
     if (this.items.length === 0) {
@@ -89,8 +90,13 @@ class ShoppingCart {
     const envio = subtotal > 0 ? 10000 : 0;
     const total = subtotal + envio;
 
-    document.getElementById('subtotal').textContent = `$${subtotal}`;
-    document.getElementById('total').textContent = `$${total}`;
+    const subtotalSpan = document.getElementById('subtotal');
+    const envioSpan = document.getElementById('envio');
+    const totalSpan = document.getElementById('total');
+
+    if (subtotalSpan) subtotalSpan.textContent = `$${subtotal}`;
+    if (envioSpan) envioSpan.textContent = `$${envio}`;
+    if (totalSpan) totalSpan.textContent = `$${total}`;
   }
 
   clearCart() {
@@ -103,10 +109,15 @@ class ShoppingCart {
 
 const cart = new ShoppingCart();
 
-function addToCart(id) { cart.addItem(id); }
+function addToCart(id) {
+  cart.addItem(id);
+}
 
 function mostrarCarrito() {
-  document.getElementById('cartSection').style.display = 'block';
+  const cartSection = document.getElementById('cartSection');
+  if (cartSection) {
+    cartSection.style.display = cartSection.style.display === 'block' ? 'none' : 'block';
+  }
 }
 
 function checkout() {
@@ -114,16 +125,5 @@ function checkout() {
     alert("Tu carrito está vacío");
     return;
   }
-
   window.location.href = "checkout.html";
-
-document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('nav');
-    
-    if (menuToggle && nav) {
-        menuToggle.addEventListener('click', function() {
-            nav.classList.toggle('active');
-        });
-    }
-});
+}
