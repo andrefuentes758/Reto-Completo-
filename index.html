@@ -3,127 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tienda Online</title>
+  <title>Retro Court - Inicio</title>
   <link rel="stylesheet" href="style.css">
-
-
 </head>
 <body>
   <header>
     <div class="logo">
-        <h1>Retro Court</h1>
+      <h1>Retro Court</h1>
     </div>
-    
-    <button class="menu-toggle" aria-label="Menú">☰</button>
-    
+    <button class="menu-toggle">☰</button>
     <nav>
-        <ul>
-            <li><a href="index.html">Principal</a></li>
-            <li><a href="catalogo.html">Catálogo</a></li>
-            <li><a href="acerca de nosotros.html">Acerca de nosotros</a></li>
-            <li><a href="contactos.html">Contacto</a></li>
-        </ul>
+      <ul>
+        <li><a href="index.html">Principal</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="acerca de nosotros.html">Acerca de nosotros</a></li>
+        <li><a href="contactos.html">Contacto</a></li>
+      </ul>
     </nav>
-    <script>
-      function toggleMenu() {
-        const menu = document.getElementById("nav-menu");
-        menu.classList.toggle("active");
-      }
-      </script>
-      
-    <div class="buscador">
-        <input type="text" placeholder="Buscar productos...">
+    <div class="carrito-icono" onclick="mostrarCarrito()">
+      🛒 <span id="cartCount">0</span>
     </div>
-</header>
+  </header>
 
+  <main>
+    <section class="descripcion">
+      <h1>Bienvenido a Retro Court</h1>
+      <p>Descubre los zapatos más vendidos</p>
+    </section>
 
- 
-
- <br>
- <br>
- <br>
-  <section class="descripcion">
-    <h1>Bienvenido a Retro Court</h1>
-    <p>Descubre los zapatos más vendidos</p>
-  </section>
-
-  
- 
-  <section class="mas-vendidos">
-    <h2>Productos más vendidos</h2>
-    <div class="grid-productos">
-      <div class="producto">
-        <img src="retro 1 cafes.jpg" alt="Producto 1">
-        <h3>Jordan Retro 1 Cafés</h3>
-        <p>$200.000</p>
-        <a href="catalogo.html">Ver productos</a>
+    <section class="mas-vendidos">
+      <h2>Productos más vendidos</h2>
+      <div id="productos" class="grid-productos"></div>
+      <div class="boton-catalogo">
+        <a href="catalogo.html" class="btn-ver-catalogo">Ver catálogo completo</a>
       </div>
-      <div class="producto">
-        <img src="jordan 1 sky.jpg" alt="Producto 2">
-        <h3>Jordan Retro 1 Sky</h3>
-        <p>$320.000</p>
-        <a href="catalogo.html">Ver productos</a>
-      </div>
-      <div class="producto">
-        <img src="adidas.jpg" alt="Producto 3">
-        <h3>Adidas Azules</h3>
-        <p>$250.000</p>
-        <a href="catalogo.html">Ver productos</a>
-      </div>
-      <div class="producto">
-        <img src="pandas.webp" alt="Producto 4">
-        <h3>Jordan Retro 1 Pandas</h3>
-        <p>$250.000</p>
-        <a href="catalogo.html">Ver productos</a>
-      </div>
-    </div>
+    </section>
+  </main>
 
-    <div class="boton-catalogo">
-      <a href="catalogo.html">Ver catálogo completo</a>
+  <!-- Carrito flotante -->
+  <section id="cartSection" class="carrito">
+    <h2>Carrito de Compras</h2>
+    <div id="cartItems"></div>
+    <div class="resumen">
+      <p>Subtotal: <span id="subtotal">$0</span></p>
+      <p>Envío: <span id="envio">$0</span></p>
+      <p>Total: <span id="total">$0</span></p>
+      <button onclick="checkout()">Finalizar compra</button>
+      <button onclick="cart.clearCart()">Vaciar carrito</button>
     </div>
   </section>
 
-
-  <p>Has visitado esta página <span id="contador"></span> veces.</p>
-
-
-            
-  <script>
-    // Recuperar el contador guardado en localStorage
-    let visitas = localStorage.getItem("visitas");
-
-    // Si no existe, inicializar en 0
-    if (!visitas) {
-      visitas = 0;
-    }
-
-    // Incrementar en 1
-    visitas++;
-
-    // Guardar de nuevo
-    localStorage.setItem("visitas", visitas);
-
-    // Mostrar en la página 
-    document.getElementById("contador").textContent = visitas;
-  </script>
-
-  
   <footer>
+    <div class="contador-visitas">Visitas: <span id="contador"></span></div>
     <p>© 2026 Retro Court - Todos los derechos reservados</p>
     <div class="social">
-      <a href="#">Facebook</a> | 
-         <a href="https://www.instagram.com/_ledro05_/">Instagram</a> | 
+      <a href="#">Facebook</a> |
+      <a href="https://www.instagram.com/_ledro05_/">Instagram</a> |
       <a href="#">WhatsApp</a>
     </div>
-    <div class="carrito">
-      <a href="#">ver carrito</a>
+    <div class="factura">
+      <a href="#">Consultar factura electrónica</a>
     </div>
   </footer>
 
+  <script src="productos.js"></script>
+  <script src="carrito.js"></script>
   <script>
-    function toggleMenu() {
-      document.getElementById('menu').classList.toggle('active');
+    // Mostrar solo los primeros 6 productos como más vendidos
+    function renderProductos(lista) {
+      const cont = document.getElementById("productos");
+      // Tomar solo los primeros 6 productos
+      const productosMostrar = lista.slice(0, 6);
+      
+      cont.innerHTML = productosMostrar.map(p => `
+        <div class="producto">
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+          <p class="precio">$${p.price.toLocaleString()}</p>
+          <p class="stock">Stock: ${p.stock} unidades</p>
+          <button onclick="addToCart(${p.id})">Agregar al carrito</button>
+        </div>
+      `).join("");
     }
+
+    // Cargar productos al iniciar
+    renderProductos(products);
+
+    // Contador de visitas
+    let visitas = localStorage.getItem("visitas");
+    if (!visitas) visitas = 0;
+    visitas++;
+    localStorage.setItem("visitas", visitas);
+    document.getElementById("contador").textContent = visitas;
+
+    // Menú hamburguesa
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('nav');
+      if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => nav.classList.toggle('active'));
+      }
+    });
   </script>
 </body>
 </html>
